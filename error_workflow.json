@@ -1,0 +1,75 @@
+{
+  "id": "bdb7d9f6-d656-4a44-b9e6-f1b2a7b7d5a8",
+  "name": "Error Handler Workflow",
+  "active": false,
+  "nodes": [
+    {
+      "id": "err1",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "err2",
+      "name": "Build Error Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e1",
+              "name": "workflowName",
+              "type": "string",
+              "value": "={{ $json.workflow.name }}"
+            },
+            {
+              "id": "e2",
+              "name": "failedNode",
+              "type": "string",
+              "value": "={{ $json.execution ? $json.execution.workflowData ? $json.execution.workflowData.node ?? '' : '' : '' }}"
+            },
+            {
+              "id": "e3",
+              "name": "errorMessage",
+              "type": "string",
+              "value": "={{ $json.error.message }}"
+            },
+            {
+              "id": "e4",
+              "name": "alert",
+              "type": "string",
+              "value": "=Workflow {{ $json.workflow.name }} failed at {{ $json.execution.workflowData.node }}: {{ $json.error.message }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Build Error Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

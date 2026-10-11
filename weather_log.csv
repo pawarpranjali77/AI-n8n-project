@@ -1,0 +1,2 @@
+timestamp,city,temperature_c,humidity_pct,wind_kmh,precip_mm,heat_alert
+2026-10-12T02:30,Pune,25.9,52,5.8,0.0,False
